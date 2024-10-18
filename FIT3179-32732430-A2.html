@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Police Stations in Australia</title>
+    <script src="https://cdn.jsdelivr.net/npm/vega@5.21.0"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega-lite@5.6.0"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega-embed@6.22.1"></script>
+
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #e0e0e0, #bdbdbd);
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #424242;
+            color: white;
+            padding: 50px 20px;
+            border-bottom: 5px solid #212121;
+        }
+
+        .header-text {
+            text-align: center;
+            flex: 1;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 2.5em;
+        }
+
+        header p {
+            font-size: 1.2em;
+            margin-top: 10px;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            line-height: 1.6;
+        }
+
+        .header-image {
+            width: 100px;
+            height: 100px;
+        }
+
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 30px;
+            padding: 30px;
+        }
+
+        .visualization {
+            background-color: #f5f5f5;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            min-width: 320px;
+            text-align: center;
+            transition: transform 0.2s;
+            position: relative;
+        }
+
+        .visualization img {
+            width: 100px;  
+            height: 100px; 
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            opacity: 0.8;
+        }
+
+        
+
+        .visualization:hover {
+            transform: scale(1.02);
+        }
+
+        .highlight {
+            flex: 1 1 100%;  
+            height: 800px;  
+            padding: 30px;  
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .text-section {
+            margin-top: 15px;
+            text-align: left;
+            font-size: 16px;
+            color: #333;
+            line-height: 1.6;
+            max-width: 100%;  
+            word-wrap: break-word; 
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            background-color: #424242;
+            color: white;
+            border-top: 5px solid #212121;
+            position: fixed;
+            width: 100%;
+            bottom: 0;
+        }
+
+        .nav-link {
+            display: inline-block;
+            margin-top: 15px;
+            text-decoration: none;
+            color: white;
+            background-color: #616161;
+            padding: 10px 20px;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
+        .nav-link:hover {
+            background-color: #424242;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <img src="https://static-00.iconduck.com/assets.00/police-officer-icon-451x512-j34ev4vm.png" 
+             alt="Left Icon" class="header-image">
+    
+        <div class="header-text">
+            <h1>Police Stations in Australia</h1>
+            <p>
+                Welcome to our  overview of <strong>police stations across Australia</strong>. Law enforcement is an 
+                essential service in maintaining public safety, preventing crime, and responding to emergencies. The way police 
+                facilities are distributed across states reflects how resources are allocated and how communities—both urban and rural—are served.
+            </p>
+            <p>
+                This page offers insights into the <strong>distribution, density, and proportions</strong> of police stations through 
+                various visualizations. Explore maps that highlight the spatial spread of stations, compare their presence in 
+                different states, and gain an understanding of how law enforcement infrastructure aligns with regional needs.
+            </p>
+        </div>
+    
+        <img src="https://static.thenounproject.com/png/3880006-200.png" 
+             alt="Right Icon" class="header-image">
+    </header>
+
+<div class="container">
+    <!-- Dot Map -->
+    <div class="visualization highlight">
+        <h2>Police Stations Across Australia</h2>
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQtHGDUKQ75j3J-vNtEKprRMKsZ4joIVonOHQ&s" alt="Map Icon">
+        <div id="dotmap" style="flex: 1;"></div>
+    
+        <div class="text-section">
+            <p>
+                The dot map provides a clear <strong>spatial understanding</strong> of how police services are distributed across 
+                <strong>Australia</strong>, highlighting the relationship between police station locations and 
+                <strong>roads, population centers, and regional needs.</strong> Through our observations, it is evident that 
+                <strong>most police stations are positioned strategically along major roads and in or near urban areas.</strong> 
+                This placement reflects the key priorities of law enforcement in terms of accessibility, public safety, and response times.
+            </p>
+    
+            <p style="color: red; font-weight: bold;">
+                Red lines: Roads
+            </p>
+            <p style="color: brown; font-weight: bold;">
+                Brown lines: Railroads
+            </p>
+            <p style="color: lightsalmon; font-weight: bold;">
+                Light yellow spots: Urban areas
+            </p>
+        </div>
+    </div>
+
+    <!-- Pie Chart -->
+    <div class="visualization">
+        <h2>Percentage of Police Stations by State</h2>
+        <img src="https://media.istockphoto.com/id/1314955036/vector/diagram.jpg?s=612x612&w=0&k=20&c=VJi2XcYvzpmuwYzdhz2d6IbOHufJQTQmMZlxOC8C5CA=" alt="Pie Chart Icon">
+        <div id="piechart"></div>
+        <div class="text-section">
+            <p><strong>New South Wales and Queensland</strong> hold the largest shares of police stations due to their high population densities and extensive urban areas, followed closely by <strong>Victoria. 
+                Western Australia and South Australia</strong> have moderate shares, focusing on urban centers like Perth and Adelaide. In contrast, <strong>Northern Territory and ACT</strong>
+                have the smallest shares, reflecting their lower population densities and smaller coverage areas. The chart emphasizes the need to balance urban policing with
+                 coverage for regional and remote areas across Australia.</p>
+        </div>
+    </div>
+
+    <!-- Bar Chart -->
+    <div class="visualization">
+        <h2>Number of Police Stations by State</h2>
+        <img src="https://i.pinimg.com/originals/d9/2a/70/d92a70627125d04bd0b3448c155eaf06.jpg" alt="Bar Chart Icon">
+        <div id="barchart"></div>
+        <div class="text-section">
+            <p>As shown in the pie chart <strong>New South Wales</strong> has the most police stations with over 400, followed by <strong>Queensland and Victoria</strong> with around 350 each. <strong>Western Australia</strong> has just over 150, 
+                while <strong>South Australia, Tasmania, and Northern Territory</strong> range between 50 to 120. <strong>ACT</strong> have fewer than 50 stations. 
+                The chart highlights how larger states with urban areas have more police stations, while sparser regions have fewer.</p>
+        </div>
+    </div>
+
+    <!-- Choropleth Map -->
+    <div class="visualization">
+        <h2>Police Station Density by State</h2>
+        <img src="https://www.svgrepo.com/show/339992/choropleth-map.svg" alt="Choropleth Map Icon">
+        <div id="choropleth"></div>
+        <div class="text-section">
+            <p><strong>Explanation:</strong> The choropleth map displays the density of police stations by shading the states based on the number of stations per area, offering insights into regional coverage.</p>
+        </div>
+    </div>
+</div>
+
+<footer>
+    <p>Data Visualization Assignment - FIT3179 - Stefano J 32732430</p>
+    <p>Data source: https://digital.atlas.gov.au/datasets/e5097c31e56545839b236a86b25546e7_2/explore?location=-12.009229%2C-47.606250%2C3.15</p>
+</footer>
+
+<script>
+    vegaEmbed('#dotmap', 'https://raw.githubusercontent.com/sjus0002/FIT3179-A2/refs/heads/main/dot_map.json', {
+        width: 1000,
+        height: 500
+    }).then(result => console.log('Dot Map Loaded'))
+      .catch(console.error);
+
+    vegaEmbed('#piechart', 'https://raw.githubusercontent.com/sjus0002/FIT3179-A2/refs/heads/main/pie.json', {renderer: 'svg'})
+        .then(result => console.log('Pie Chart Loaded'))
+        .catch(console.error);
+
+    vegaEmbed('#barchart', 'https://raw.githubusercontent.com/sjus0002/FIT3179-A2/refs/heads/main/bar.json', {renderer: 'svg'})
+        .then(result => console.log('Bar Chart Loaded'))
+        .catch(console.error);
+
+    vegaEmbed('#choropleth', 'https://raw.githubusercontent.com/sjus0002/FIT3179-A2/refs/heads/main/choropl.json')
+        .then(result => console.log('Choropleth Map Loaded'))
+        .catch(console.error);
+</script>
+
+</body>
+</html>
